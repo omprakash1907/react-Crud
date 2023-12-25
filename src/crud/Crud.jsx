@@ -20,7 +20,6 @@ function Crud() {
     }, [lists])
 
     useEffect(() => {
-        // Check if there is no data
         if (lists.length === 0) {
             setNoRecords(true);
         } else {
@@ -55,18 +54,23 @@ function Crud() {
         setError(validate)
         const check = Object.keys(validate)
         if (check.length < 1) {
+            if (editMode) {
+                const temp = [...lists]
+                temp[editIndex] = input;
+                setList(temp);
+                setEditMode(false) 
+                return
+            } 
             setList([...lists, input]);
-            setInput({
-                name: '',
-                email: ''
-            })
+            
+            console.log('hhh')
             setEditMode(false)
         }
-        if (editMode) {
-            lists[editIndex] = input;
-            setList(lists);
-            setEditMode(false)
-        } 
+        setInput({
+            name: '',
+            email: ''
+        })
+        
     }
 
     // delete------------------------------------------------>
